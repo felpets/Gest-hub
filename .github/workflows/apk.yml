@@ -23,7 +23,7 @@ on:
         description: "real (Supabase da empresa) ou mock (dados fictícios, só para ver o app funcionando)"
         type: choice
         options: [real, mock]
-        default: real
+        default: Mock
   push:
     tags: ["apk-v*"]
 
