@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Frente do ícone adaptativo (Android 8+). O mesmo glifo do favicon, mas
+  redesenhado na tela de 108 do ícone adaptativo e dentro da zona segura: o
+  launcher corta os cantos (círculo, quadrado arredondado, gota), e só os 66 do
+  centro são garantidos. O desenho ocupa ~47 em volta do centro (54,54), com
+  folga para qualquer máscara.
+
+  Conta: ponto do favicon (x,y) → 54 + 2,5 × (x − 16); o traço 2.6 × 2,5 = 6.5.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:pathData="M34,65.25 l13,-13 l9,9 L74,43.25"
+        android:strokeColor="#FF4D1C"
+        android:strokeWidth="6.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M61.5,42.75 h13 v13"
+        android:strokeColor="#FF4D1C"
+        android:strokeWidth="6.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

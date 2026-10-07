@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Tela de abertura (AppTheme.NoActionBarLaunch, em values/styles.xml): fica no ar
+  o instante entre tocar no ícone e o WebView ter a tela de Pagamentos pronta.
+  Fundo preto da marca com a seta no centro — sem texto, que em tela pequena e
+  em milissegundos ninguém lê.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/zaytan_preto" />
+    <item
+        android:drawable="@drawable/zaytan_glifo"
+        android:gravity="center"
+        android:width="120dp"
+        android:height="120dp" />
+</layer-list>

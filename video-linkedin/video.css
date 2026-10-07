@@ -1,0 +1,82 @@
+/* Identidade do Hub: laranja #FF4D1C sobre tinta #0D0C0C, Inter / Plus Jakarta / Space Grotesk.
+   Nada aqui usa transition ou animation: todo movimento vem de render(t), em video.js,
+   para que cada quadro capturado seja exato. */
+:root {
+  --laranja: #ff4d1c;
+  --tinta: #0d0c0c;
+  --borda: #e7e6e6;
+  --mudo: #76757a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #1b1a1a; font-family: "Inter", system-ui, sans-serif; color: var(--tinta); overflow: hidden; }
+
+#moldura { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+#palco {
+  position: relative; width: 1920px; height: 1080px; overflow: hidden;
+  background:
+    radial-gradient(900px 600px at 88% 8%, #ffe3d9 0%, transparent 60%),
+    radial-gradient(800px 600px at 6% 96%, #fff0ea 0%, transparent 60%),
+    #faf9f9;
+}
+#controles { position: fixed; left: 0; right: 0; bottom: 0; height: 56px; display: flex; gap: 16px; align-items: center; padding: 0 20px; background: #111; color: #fff; font-size: 14px; }
+#controles button { background: var(--laranja); color: #fff; border: 0; border-radius: 8px; padding: 9px 16px; font-weight: 600; cursor: pointer; }
+#controles input { flex: 1; accent-color: var(--laranja); }
+body.render #controles { display: none; }
+.erro { position: fixed; left: 20px; top: 20px; z-index: 99; background: #b3261e; color: #fff; padding: 12px 16px; border-radius: 10px; font-weight: 600; }
+
+/* ── Navegador ─────────────────────────────
+   A área útil tem 1620x818: é a captura de 1440x727 ampliada 1,125x. */
+.web { position: absolute; left: 150px; top: 52px; width: 1620px; height: 866px; border-radius: 18px; background: #fff; overflow: hidden; box-shadow: 0 2px 6px rgb(13 12 12 / .06), 0 50px 110px -30px rgb(13 12 12 / .30); }
+.barra { height: 48px; background: #f3f2f2; border-bottom: 1px solid var(--borda); display: flex; align-items: center; padding: 0 20px; gap: 9px; }
+.barra i { width: 13px; height: 13px; border-radius: 50%; background: #d9d7d7; }
+.barra .url { margin: 0 auto; transform: translateX(-34px); background: #fff; border: 1px solid var(--borda); border-radius: 9px; padding: 6px 28px; min-width: 620px; text-align: center; font-size: 15px; color: var(--mudo); font-weight: 500; white-space: nowrap; }
+.barra .url b { color: var(--tinta); font-weight: 600; }
+.barra .url span:not(:empty)::before { content: "  ·  "; white-space: pre; color: #c4c2c2; }
+.app { position: relative; height: 818px; overflow: hidden; }
+.tela { position: absolute; inset: 0; overflow: hidden; background: #fff; }
+.tela img { display: block; width: 1620px; }
+/* A parte que rola: tudo menos o menu (256 px) e a barra do topo (64 px) da captura. */
+.rolo { position: absolute; left: 288px; top: 72px; right: 0; bottom: 0; overflow: hidden; }
+.rolo img { margin: -72px 0 0 -288px; }
+
+/* ── App Android ─────────────────────────────────── */
+.mob { position: absolute; inset: 0; }
+.texto { position: absolute; left: 170px; top: 300px; width: 900px; }
+.olho { display: inline-block; background: var(--tinta); color: #fff; border-radius: 999px; padding: 9px 20px; font-size: 16px; font-weight: 600; letter-spacing: .08em; }
+.texto h2 { font-family: "Plus Jakarta Sans"; font-size: 84px; line-height: 1.04; font-weight: 800; letter-spacing: -.035em; margin-top: 28px; }
+.texto h2 span { color: var(--laranja); }
+.halo { position: absolute; left: 1070px; top: 110px; width: 640px; height: 640px; border-radius: 50%; background: radial-gradient(circle, #ffb79f 0%, transparent 68%); }
+.fone { position: absolute; left: 1180px; top: 44px; width: 420px; height: 868px; border-radius: 58px; background: var(--tinta); padding: 13px; box-shadow: 0 60px 100px -30px rgb(13 12 12 / .5), inset 0 0 0 2px #3a3838; }
+.visor { position: relative; width: 394px; height: 842px; border-radius: 46px; background: #fff; overflow: hidden; }
+.camera { position: absolute; left: 50%; top: 10px; width: 15px; height: 15px; margin-left: -7px; border-radius: 50%; background: var(--tinta); z-index: 5; }
+.status { position: absolute; left: 0; right: 0; top: 0; height: 34px; padding: 10px 26px 0; display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; z-index: 4; }
+/* A captura de 390x800 ocupa o visor abaixo da barra de status. */
+.telas { position: absolute; left: 0; top: 34px; width: 394px; height: 808px; overflow: hidden; }
+.telas img { position: absolute; left: 0; top: 0; width: 394px; display: block; }
+
+/* ── Abertura e encerramento (fundo escuro) ───────────── */
+.escuro { position: absolute; inset: 0; background: var(--tinta); color: #fff; display: flex; flex-direction: column; align-items: center; padding-top: 214px; }
+.brilho { position: absolute; left: 50%; top: 42%; width: 1300px; height: 900px; margin: -450px 0 0 -650px; border-radius: 50%; background: radial-gradient(closest-side, rgb(255 77 28 / .34), transparent); }
+.escuro > :not(.brilho) { position: relative; }
+.logo { display: flex; align-items: center; gap: 30px; }
+.logo svg { width: 132px; height: 132px; }
+.logo h2 { font-family: "Plus Jakarta Sans"; font-size: 118px; font-weight: 800; letter-spacing: -.04em; line-height: 1; }
+.lema { font-size: 40px; font-weight: 500; margin-top: 46px; color: #e9e7e7; }
+.pilulas { display: flex; gap: 14px; margin-top: 38px; }
+.pilulas span { border: 1px solid rgb(255 255 255 / .22); border-radius: 999px; padding: 12px 24px; font-size: 21px; font-weight: 500; color: #d9d7d7; }
+.cta { margin-top: 56px; background: var(--laranja); border-radius: 22px; padding: 26px 62px; font-family: "Plus Jakarta Sans"; font-size: 40px; font-weight: 800; }
+.contato { margin-top: 26px; font-size: 24px; color: #a9a7a7; }
+
+/* ── Cartão de capítulo ───────────────────────────────── */
+.capitulo { position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column; justify-content: center; padding-left: 220px;
+  background: radial-gradient(900px 700px at 85% 20%, #ffe3d9 0%, transparent 62%), #faf9f9; }
+.capitulo .num { font-family: "Space Grotesk"; font-size: 44px; font-weight: 600; color: var(--laranja); letter-spacing: .04em; }
+.capitulo h2 { font-family: "Plus Jakarta Sans"; font-size: 150px; font-weight: 800; letter-spacing: -.045em; line-height: 1.02; margin-top: 10px; }
+.capitulo p { font-size: 40px; font-weight: 500; color: var(--mudo); margin-top: 22px; }
+.escuro { z-index: 11; }
+
+/* ── Legenda e progresso ──────────────────────────────── */
+.legenda { position: absolute; left: 0; right: 0; top: 950px; display: flex; justify-content: center; z-index: 20; }
+.legenda span { background: rgb(13 12 12 / .9); color: #fff; font-size: 30px; font-weight: 600; padding: 16px 34px; border-radius: 18px; white-space: nowrap; }
+.legenda.sobre-escuro span { background: rgb(255 255 255 / .1); }
+.avanco { position: absolute; left: 0; bottom: 0; height: 6px; background: var(--laranja); z-index: 21; }

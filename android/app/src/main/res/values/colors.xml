@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Cores da marca. Sobrescrevem as do módulo capacitor-android (índigo/rosa do
+  template), que apareceriam na barra de status do app.
+-->
+<resources>
+    <color name="zaytan_preto">#0D0C0C</color>
+    <color name="zaytan_laranja">#FF4D1C</color>
+
+    <color name="colorPrimary">#0D0C0C</color>
+    <color name="colorPrimaryDark">#0D0C0C</color>
+    <color name="colorAccent">#FF4D1C</color>
+</resources>

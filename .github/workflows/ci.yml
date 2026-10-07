@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Cancela execuções antigas do mesmo ref quando chega um push novo.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    name: typecheck + testes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      # Gates que bloqueiam (verdes hoje): tipos do app, tipos das Functions e
+      # os testes da lógica de dinheiro.
+      - name: Typecheck (app)
+        run: npx tsc --noEmit -p tsconfig.json
+
+      - name: Typecheck (api / Vercel Functions)
+        run: npx tsc --noEmit -p api/tsconfig.json
+
+      - name: Testes (Vitest)
+        run: npm test
+
+      # Lint é informativo por enquanto: a base ainda não passou por
+      # `prettier --write`, então há ruído de formatação. Não bloqueia o CI;
+      # quando a formatação for normalizada, remover o continue-on-error.
+      - name: Lint (informativo)
+        run: npx eslint .
+        continue-on-error: true

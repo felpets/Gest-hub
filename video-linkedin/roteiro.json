@@ -1,0 +1,127 @@
+{
+  "voz": "pt-BR-AntonioNeural",
+  "ritmo": "+4%",
+  "blocos": [
+    {
+      "tipo": "abertura",
+      "titulo": "Gestão, financeiro e RH em um só sistema",
+      "fala": "Este é o Finance HUB: gestão, financeiro e RH da sua empresa em um só sistema. Vamos fazer um tour rápido."
+    },
+
+    { "tipo": "capitulo", "numero": "01", "titulo": "Gestão", "sub": "O dashboard da diretoria" },
+    {
+      "tipo": "web",
+      "telas": [
+        { "arq": "dashboard", "rotulo": "Gestão › Dashboard › Histórico", "fala": "No dashboard de gestão, o histórico mostra saldos, entradas, saídas e o faturamento de cada mês." },
+        { "arq": "projecao", "rotulo": "Gestão › Dashboard › Projeção de caixa", "fala": "A projeção de caixa soma as contas a pagar e as cobranças em aberto, e avisa antes de o dinheiro faltar." },
+        { "arq": "pessoas", "rotulo": "Gestão › Dashboard › Pessoas", "fala": "Na aba Pessoas, a diretoria acompanha os indicadores do RH: funcionários por empresa, turnover e o custo da folha." },
+        { "arq": "pessoas-relatorios", "rotulo": "Gestão › Dashboard › Pessoas › Relatórios", "fala": "E os relatórios de pessoas já saem prontos para exportar." }
+      ]
+    },
+
+    { "tipo": "capitulo", "numero": "02", "titulo": "Financeiro", "sub": "Caixa, extratos, pagamentos e receitas" },
+    {
+      "tipo": "web",
+      "telas": [
+        { "arq": "caixa", "rotulo": "Financeiro › Caixa › Movimentações", "fala": "No caixa, as movimentações de todas as contas ficam em uma lista só, com filtros e categorias." },
+        { "arq": "fluxo", "rotulo": "Financeiro › Caixa › Fluxo realizado", "fala": "O fluxo realizado mostra o que de fato entrou e saiu, mês a mês." },
+        { "arq": "analises", "rotulo": "Financeiro › Caixa › Análises", "fala": "As análises financeiras detalham as despesas por categoria." },
+        { "arq": "cartoes", "rotulo": "Financeiro › Caixa › Cartões", "fala": "E na aba Cartões, você acompanha a fatura e os gastos de cada cartão." }
+      ]
+    },
+    {
+      "tipo": "web",
+      "telas": [
+        { "arq": "extratos", "rotulo": "Financeiro › Extratos › Importar", "fala": "Para lançar, basta importar o extrato do banco." },
+        { "arq": "extratos-previa", "rotulo": "Financeiro › Extratos › Importar", "fala": "O sistema lê cada lançamento e mostra uma prévia antes de gravar." },
+        { "arq": "revisar", "rotulo": "Financeiro › Extratos › Revisar e classificar", "fala": "Depois, você revisa as categorias sugeridas e aprova em lote." },
+        { "arq": "conferir", "rotulo": "Financeiro › Extratos › Conferir com o banco", "fala": "Por fim, confere o saldo do sistema com o saldo do banco." }
+      ]
+    },
+    {
+      "tipo": "web",
+      "telas": [
+        { "arq": "pix", "rotulo": "Financeiro › Pagamentos › Pix do dia", "fala": "Em Pagamentos, o Pix do dia reúne tudo o que precisa ser pago hoje." },
+        { "arq": "contas", "rotulo": "Financeiro › Pagamentos › Contas do mês", "fala": "As contas do mês e as recorrências ficam juntas, com os vencimentos à vista." },
+        { "arq": "dividas", "rotulo": "Financeiro › Pagamentos › Dívidas e acordos", "fala": "E as dívidas e acordos têm cada parcela acompanhada de perto." }
+      ]
+    },
+    {
+      "tipo": "web",
+      "telas": [
+        { "arq": "clientes", "rotulo": "Financeiro › Receitas › Clientes", "fala": "Em Receitas, você cadastra os clientes," },
+        { "arq": "cobrancas", "rotulo": "Financeiro › Receitas › Cobranças", "fala": "acompanha as cobranças em aberto" },
+        { "arq": "vendas", "rotulo": "Financeiro › Receitas › Vendas", "fala": "e registra as vendas." },
+        { "arq": "relatorios", "rotulo": "Financeiro › Análise financeira", "fala": "Já a análise financeira reúne os relatórios: evolução mensal, categorias, receitas e despesas." }
+      ]
+    },
+
+    { "tipo": "capitulo", "numero": "03", "titulo": "RH", "sub": "Pessoas, treinamento, recrutamento e folha" },
+    {
+      "tipo": "web",
+      "telas": [
+        { "arq": "rh", "rotulo": "RH › Painel do RH", "fala": "O painel do RH mostra as pendências e os indicadores do dia a dia." },
+        { "arq": "funcionarios", "rotulo": "RH › Funcionários", "fala": "Em Funcionários, ficam o cadastro, os benefícios e os dados bancários de cada pessoa," },
+        { "arq": "documentos", "rotulo": "RH › Funcionários › Documentos", "fala": "os documentos," },
+        { "arq": "atestados", "rotulo": "RH › Funcionários › Atestados e faltas", "fala": "e os atestados e faltas." }
+      ]
+    },
+    {
+      "tipo": "web",
+      "telas": [
+        { "arq": "treinamento", "rotulo": "RH › Treinamento › Trainees", "fala": "O treinamento acompanha os prazos de cada trainee," },
+        { "arq": "turmas", "rotulo": "RH › Treinamento › Turmas", "fala": "organiza as turmas" },
+        { "arq": "treinamento-pagamento", "rotulo": "RH › Treinamento › Cálculo e pagamento", "fala": "e calcula o pagamento do período." },
+        { "arq": "recrutamento", "rotulo": "RH › Recrutamento › Candidatos", "fala": "No recrutamento, os candidatos avançam por um funil de etapas," },
+        { "arq": "talentos", "rotulo": "RH › Recrutamento › Banco de talentos", "fala": "com banco de talentos," },
+        { "arq": "agenda", "rotulo": "RH › Recrutamento › Agenda e entrevistas", "fala": "agenda de entrevistas" },
+        { "arq": "roteiro", "rotulo": "RH › Recrutamento › Roteiro", "fala": "e um roteiro padrão para cada conversa." }
+      ]
+    },
+    {
+      "tipo": "web",
+      "telas": [
+        { "arq": "folha", "rotulo": "RH › Folha de pagamento › Extrato mensal", "fala": "A folha de pagamento traz o extrato mensal oficial," },
+        { "arq": "repasse", "rotulo": "RH › Folha de pagamento › Repasse", "fala": "a folha de repasse," },
+        { "arq": "beneficios", "rotulo": "RH › Folha de pagamento › Benefícios", "fala": "os benefícios," },
+        { "arq": "rescisoes", "rotulo": "RH › Folha de pagamento › Rescisões", "fala": "as rescisões" },
+        { "arq": "diario", "rotulo": "RH › Folha de pagamento › Pagamento diário", "fala": "e os pagamentos diários." }
+      ]
+    },
+
+    { "tipo": "capitulo", "numero": "04", "titulo": "Configurações", "sub": "Cada empresa do seu jeito" },
+    {
+      "tipo": "web",
+      "telas": [
+        { "arq": "config-usuarios", "rotulo": "Configurações › Usuários", "fala": "Nas configurações, você cria os usuários e define o que cada perfil pode ver e fazer," },
+        { "arq": "config-rh", "rotulo": "Configurações › RH", "fala": "ajusta as regras do RH" },
+        { "arq": "config-funcionalidades", "rotulo": "Configurações › Funcionalidades", "fala": "e liga só as funcionalidades que a sua empresa usa." }
+      ]
+    },
+
+    { "tipo": "capitulo", "numero": "05", "titulo": "App Android", "sub": "O sistema no bolso" },
+    {
+      "tipo": "celular",
+      "titulo": "O financeiro e o RH<br>na <span>palma da mão</span>",
+      "telas": [
+        { "arq": "inicio", "fala": "E tudo isso também está no aplicativo Android, com os mesmos dados da versão web:" },
+        { "arq": "cartoes", "fala": "as faturas dos cartões," },
+        { "arq": "fatura" },
+        { "arq": "pagamentos", "fala": "os pagamentos do dia em poucos toques," },
+        { "arq": "pagamentos-selecionado" },
+        { "arq": "pagamentos-confirmar" },
+        { "arq": "rh", "fala": "e o RH sempre à mão." },
+        { "arq": "rh-funcionarios" }
+      ]
+    },
+
+    {
+      "tipo": "fim",
+      "lema": "Gestão, financeiro e RH em um só sistema.",
+      "botao": "Peça uma demonstração",
+      "contato": "Fale com a gente aqui pelo LinkedIn",
+      "pilulas": ["Dashboard de gestão", "Caixa e extratos", "Pagamentos e receitas", "RH completo", "Web + Android"],
+      "fala": "Finance HUB. Gestão, financeiro e RH em um só sistema. Fale com a gente e peça uma demonstração."
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fundo do ícone adaptativo: o mesmo preto do favicon do site. -->
+    <color name="ic_launcher_background">#0D0C0C</color>
+</resources>

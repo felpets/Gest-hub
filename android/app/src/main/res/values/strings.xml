@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Laportec Pagamentos</string>
+    <string name="title_activity_main">Laportec Pagamentos</string>
+    <string name="package_name">com.zaytan.laportec.pagamentos</string>
+    <string name="custom_url_scheme">com.zaytan.laportec.pagamentos</string>
+</resources>

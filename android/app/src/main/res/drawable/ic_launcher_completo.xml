@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Ícone inteiro (fundo + glifo), para o Android 7, que não tem ícone adaptativo.
+  É o favicon.svg ponto a ponto: quadrado preto de canto 8 e a seta laranja.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+    <path
+        android:pathData="M8,0 H24 A8,8 0 0 1 32,8 V24 A8,8 0 0 1 24,32 H8 A8,8 0 0 1 0,24 V8 A8,8 0 0 1 8,0 Z"
+        android:fillColor="#0D0C0C" />
+    <path
+        android:pathData="M8,20.5 l5.2,-5.2 l3.6,3.6 L24,11.7"
+        android:strokeColor="#FF4D1C"
+        android:strokeWidth="2.6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M19,11.5 h5.2 v5.2"
+        android:strokeColor="#FF4D1C"
+        android:strokeWidth="2.6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

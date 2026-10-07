@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 7 não tem ícone adaptativo: nele o @mipmap/ic_launcher do manifesto
+  cai neste atalho, que aponta para o ícone inteiro (fundo + glifo). No Android
+  8+ vale mipmap-anydpi-v26/, que é mais específico.
+
+  Assim o APK não carrega nenhum PNG de ícone: os dois casos saem do mesmo
+  desenho vetorial, que é o favicon do site.
+-->
+<resources>
+    <item name="ic_launcher" type="mipmap">@drawable/ic_launcher_completo</item>
+    <item name="ic_launcher_round" type="mipmap">@drawable/ic_launcher_completo</item>
+</resources>

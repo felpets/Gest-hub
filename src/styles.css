@@ -1,0 +1,227 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * ZAYTAN HUB FINANCEIRO — Design System
+ * Premium, minimal, executive finance SaaS.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-ink: var(--warning-ink);
+  --color-zaytan: var(--zaytan);
+  --color-zaytan-foreground: var(--zaytan-foreground);
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-numeric: "Space Grotesk", ui-monospace, monospace;
+  --shadow-elevated: 0 1px 2px rgb(13 12 12 / 0.04), 0 8px 24px -8px rgb(13 12 12 / 0.08);
+  --shadow-soft: 0 1px 2px rgb(13 12 12 / 0.04);
+  --shadow-glow: 0 10px 40px -10px rgb(255 77 28 / 0.35);
+}
+
+:root {
+  --radius: 0.875rem;
+
+  /* Surfaces */
+  --background: oklch(1 0 0);                       /* white */
+  --foreground: oklch(0.16 0.005 286);              /* near-black ink */
+  --ink: oklch(0.16 0.005 286);                     /* #0D0C0C-ish */
+  --surface: oklch(0.985 0.002 286);                /* off-white */
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0.005 286);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0.005 286);
+
+  /* Brand — Zaytan Orange #FF4D1C */
+  --primary: oklch(0.66 0.21 33);
+  --primary-foreground: oklch(1 0 0);
+  --zaytan: oklch(0.66 0.21 33);
+  --zaytan-foreground: oklch(1 0 0);
+
+  /* Neutrals */
+  --secondary: oklch(0.97 0.002 286);               /* #F5F5F5 */
+  --secondary-foreground: oklch(0.16 0.005 286);
+  --muted: oklch(0.97 0.002 286);
+  --muted-foreground: oklch(0.5 0.005 286);
+  --accent: oklch(0.96 0.005 33 / 0.6);
+  --accent-foreground: oklch(0.16 0.005 286);
+
+  /* Status */
+  --success: oklch(0.52 0.13 150);                  /* #1F7A3A */
+  --success-foreground: oklch(1 0 0);
+  --warning: oklch(0.78 0.16 75);
+  --warning-foreground: oklch(0.16 0.005 286);
+  /* Texto de alerta legível sobre fundo claro (o --warning é claro demais p/ texto). */
+  --warning-ink: oklch(0.52 0.12 65);
+  --destructive: oklch(0.58 0.21 33);               /* #D63B0F alert */
+  --destructive-foreground: oklch(1 0 0);
+
+  --border: oklch(0.92 0.003 286);                  /* #E5E5E5 */
+  --input: oklch(0.93 0.003 286);
+  --ring: oklch(0.66 0.21 33 / 0.4);
+
+  /* Charts */
+  --chart-1: oklch(0.66 0.21 33);                   /* zaytan orange */
+  --chart-2: oklch(0.52 0.13 150);                  /* green */
+  --chart-3: oklch(0.16 0.005 286);                 /* ink */
+  --chart-4: oklch(0.7 0.005 286);                  /* gray */
+  --chart-5: oklch(0.58 0.21 33);                   /* red-orange */
+
+  /* Sidebar */
+  --sidebar: oklch(0.992 0.002 286);
+  --sidebar-foreground: oklch(0.3 0.005 286);
+  --sidebar-primary: oklch(0.66 0.21 33);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.96 0.003 286);
+  --sidebar-accent-foreground: oklch(0.16 0.005 286);
+  --sidebar-border: oklch(0.93 0.003 286);
+  --sidebar-ring: oklch(0.66 0.21 33 / 0.3);
+}
+
+.dark {
+  --background: oklch(0.16 0.005 286);
+  --foreground: oklch(0.985 0.002 286);
+  --card: oklch(0.2 0.005 286);
+  --card-foreground: oklch(0.985 0.002 286);
+  --popover: oklch(0.2 0.005 286);
+  --popover-foreground: oklch(0.985 0.002 286);
+  --primary: oklch(0.66 0.21 33);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.24 0.005 286);
+  --secondary-foreground: oklch(0.985 0.002 286);
+  --muted: oklch(0.24 0.005 286);
+  --muted-foreground: oklch(0.7 0.005 286);
+  --accent: oklch(0.24 0.005 286);
+  --accent-foreground: oklch(0.985 0.002 286);
+  --destructive: oklch(0.58 0.21 33);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.66 0.21 33 / 0.4);
+  --sidebar: oklch(0.18 0.005 286);
+  --sidebar-foreground: oklch(0.8 0.005 286);
+  --sidebar-primary: oklch(0.66 0.21 33);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.24 0.005 286);
+  --sidebar-accent-foreground: oklch(0.985 0.002 286);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.66 0.21 33 / 0.3);
+
+  /* Status — precisam de versão dark própria: no claro o foreground é quase
+     preto, o que ficava ilegível como texto/ícone sobre card escuro. O âmbar
+     do warning é claro nos dois temas (botão sólido usa texto escuro fixo). */
+  --success: oklch(0.65 0.15 150);
+  --success-foreground: oklch(1 0 0);
+  --warning: oklch(0.80 0.16 75);
+  --warning-foreground: oklch(0.92 0.05 75);
+  --warning-ink: oklch(0.84 0.13 78);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01", "ss03";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .font-numeric, .tabular-nums {
+    font-family: var(--font-numeric);
+    font-feature-settings: "tnum", "ss01";
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, oklch(0 0 0 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0 0 0 / 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .card-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+}
+
+/*
+ * ─── Tokens do desenho do app (Figma Make) ─────────────────────────────────
+ * O módulo de Pagamentos no celular foi desenhado no Figma; estes são os
+ * valores que o desenho usa e que o design system do Hub não tinha nome para.
+ * Ficam presos à casca de celular (.app-celular, em CascaCelular.tsx): nada
+ * disso vaza para a tela de computador.
+ *
+ * O desenho escreve texto ESCURO sobre o laranja (--primary-ink), não branco
+ * como o resto do Hub — é a escolha dele, e no claro fica mais legível. No
+ * escuro o laranja clareia (como no desenho), senão o texto escuro some.
+ */
+.app-celular {
+  --primary-ink: #101010;   /* texto sobre o laranja */
+  --primary-soft: #fedbd0;  /* cartão selecionado */
+  --primary-tint: #fef3ef;  /* etiquetas, botões tonais, trilha da timeline */
+}
+
+.dark .app-celular {
+  --primary: #fd9878;       /* laranja claro do desenho: o texto escuro segue legivel */
+  --primary-soft: #3d2119;
+  --primary-tint: #3d2119;
+}

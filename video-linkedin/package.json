@@ -1,0 +1,20 @@
+{
+  "name": "video-linkedin",
+  "private": true,
+  "type": "module",
+  "description": "Vídeo de tour do Finance HUB (1920x1080): Gestão, Financeiro, RH, Configurações e app Android, com dados fictícios e voz neural.",
+  "scripts": {
+    "capturar": "node capturar.mjs",
+    "narrar": "node narrar.mjs",
+    "render": "node render.mjs",
+    "video": "npm run narrar && npm run render",
+    "preview": "node render.mjs --preview"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0",
+    "puppeteer-core": "^24.43.1"
+  },
+  "allowScripts": {
+    "ffmpeg-static@5.3.0": true
+  }
+}

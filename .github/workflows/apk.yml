@@ -1,0 +1,177 @@
+# ─── APK Android do painel de Pagamentos ─────────────────────────────────────
+# O APK é este mesmo site empacotado num WebView (Capacitor — ver
+# capacitor.config.ts). Aqui é onde ele é COMPILADO: nenhuma máquina do
+# escritório precisa de Android Studio.
+#
+# Como gerar:  Actions › "APK Android" › Run workflow
+#              (ou empurre uma tag apk-v1.2.3 para gerar junto com a versão)
+# Como pegar:  na página da execução, em "Artifacts", baixe o .apk e abra no
+#              celular (é preciso permitir "instalar de fontes desconhecidas").
+#
+# Passo a passo, secrets e assinatura: docs/apk-android.md
+name: APK Android
+
+on:
+  workflow_dispatch:
+    inputs:
+      tipo:
+        description: "debug (instala direto, sem chave) ou release (exige os secrets da chave de assinatura)"
+        type: choice
+        options: [debug, release]
+        default: debug
+      dados:
+        description: "real (Supabase da empresa) ou mock (dados fictícios, só para ver o app funcionando)"
+        type: choice
+        options: [real, mock]
+        default: real
+  push:
+    tags: ["apk-v*"]
+
+  # Um PR que mexe no projeto Android compila o APK. Assim uma quebra do Gradle
+  # aparece na revisão, e não no dia em que alguém precisa do app — e o APK do PR
+  # já fica em Artifacts para instalar e testar antes do merge.
+  pull_request:
+    paths:
+      - "android/**"
+      - "capacitor.config.ts"
+      - ".github/workflows/apk.yml"
+
+# Duas execuções ao mesmo tempo gerariam dois APKs com o mesmo versionCode.
+concurrency:
+  group: apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    name: gerar APK
+    runs-on: ubuntu-latest
+    env:
+      # Tag não tem inputs: nesse caso vale o padrão (APK de depuração, dados reais).
+      TIPO: ${{ inputs.tipo || 'debug' }}
+      # No PR, dados fictícios: o que se prova ali é que o APK compila, e assim
+      # a checagem não depende de secret nenhum estar configurado.
+      DADOS: ${{ inputs.dados || (github.event_name == 'pull_request' && 'mock' || 'real') }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # AGP 8.13 + compileSdk 36 (android/variables.gradle) pedem JDK 21.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      # Sem a action android-actions/setup-android, de propósito: o runner do
+      # Ubuntu JÁ vem com o SDK do Android em $ANDROID_HOME e com as licenças
+      # aceitas. A action considerava o cmdline-tools da imagem uma versão errada,
+      # baixava um mais novo, e as licenças que vêm com ele (Google TV, Android XR,
+      # ARM DBT) apareciam como não aceitas: o passo parava num prompt interativo
+      # que ninguém responde no runner, despejava o contrato no log e falhava em 26s.
+      - name: SDK do Android 16 (compileSdk 36)
+        run: |
+          sdk="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          # `yes` responde as licenças que ainda faltarem. O `|| true` é porque o
+          # sdkmanager sai com erro quando o `yes` leva SIGPIPE ao fim da lista —
+          # o que importa é o passo seguinte, que falha de verdade se faltar licença.
+          yes | "$sdk" --licenses > /dev/null 2>&1 || true
+          "$sdk" "platforms;android-36" "build-tools;36.0.0"
+
+      - name: Instalar dependências
+        run: npm ci
+
+      # O build do Vite não confere tipos. Barato aqui, e evita esperar dez
+      # minutos de Gradle para descobrir que o app nem compila.
+      - name: Typecheck
+        run: npx tsc --noEmit -p tsconfig.json
+
+      - name: Conferir as chaves do Supabase
+        if: env.DADOS == 'real'
+        env:
+          URL: ${{ secrets.VITE_SUPABASE_URL }}
+          CHAVE: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          faltando=""
+          [ -n "$URL" ]   || faltando="$faltando VITE_SUPABASE_URL"
+          [ -n "$CHAVE" ] || faltando="$faltando VITE_SUPABASE_ANON_KEY"
+          if [ -n "$faltando" ]; then
+            echo "::error::Faltam secrets no repositório:$faltando (Settings › Secrets and variables › Actions)."
+            echo "::error::São as mesmas chaves do .env.local (as públicas do projeto Financeiro). Ou rode com dados=mock."
+            exit 1
+          fi
+
+      - name: Build do site (é ele que vai dentro do APK)
+        env:
+          VITE_DATA_MODE: ${{ env.DADOS }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          # Endereço do site publicado. Dentro do APK as funções /api/* (cadastro
+          # de logins, sincronização do Inter) não existem: elas rodam na Vercel.
+          VITE_API_BASE: ${{ vars.VITE_API_BASE || 'https://gest-o-laportec.vercel.app' }}
+          # Aparece no menu Mais do app: é como se sabe qual APK está no
+          # aparelho, sem adivinhar pela aparência da tela.
+          VITE_BUILD: 1.${{ github.run_number }}
+        run: npm run build
+
+      - name: Copiar o site para o projeto Android
+        run: npx cap sync android
+
+      - name: Chave de assinatura
+        if: env.TIPO == 'release'
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "::error::release exige os secrets ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS e ANDROID_KEY_PASSWORD."
+            echo "::error::Como criar a chave: docs/apk-android.md. Sem ela, gere o APK como 'debug'."
+            exit 1
+          fi
+          # Fora da árvore do projeto, para não haver como o arquivo virar artefato.
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/zaytan.keystore"
+
+      - name: Compilar o APK
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ env.TIPO == 'release' && format('{0}/zaytan.keystore', runner.temp) || '' }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        working-directory: android
+        run: |
+          chmod +x ./gradlew
+          # versionCode cresce a cada execução: é isso que faz o APK novo
+          # instalar por cima do antigo em vez de ser recusado pelo Android.
+          if [ "$TIPO" = "release" ]; then TAREFA=assembleRelease; else TAREFA=assembleDebug; fi
+          ./gradlew --no-daemon "$TAREFA" \
+            -PversionCode=${{ github.run_number }} \
+            -PversionName="1.${{ github.run_number }}"
+
+      - name: Conferir o que saiu
+        run: |
+          arquivo=$(find android/app/build/outputs/apk -name "*.apk" | head -1)
+          echo "APK: $arquivo"
+          ls -lh "$arquivo"
+          echo "sha256: $(sha256sum "$arquivo" | cut -d" " -f1)"
+          {
+            echo "### APK gerado"
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Tipo | \`$TIPO\` |"
+            echo "| Dados | \`$DADOS\` |"
+            echo "| Versão | 1.${{ github.run_number }} (código ${{ github.run_number }}) |"
+            echo "| sha256 | \`$(sha256sum "$arquivo" | cut -d" " -f1)\` |"
+            echo ""
+            echo "Baixe em **Artifacts**, abra no celular e permita a instalação de fontes desconhecidas."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apk-pagamentos-${{ env.TIPO }}-1.${{ github.run_number }}
+          path: android/app/build/outputs/apk/**/*.apk
+          if-no-files-found: error
+          # Um APK de dados reais não precisa ficar guardado meses no GitHub.
+          retention-days: 30
