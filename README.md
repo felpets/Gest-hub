@@ -4,7 +4,7 @@ Sistema organizacional único da empresa, consolidando o **Zaytan Hub Financeiro
 só aplicação, com três pilares no menu: **Financeiro**, **RH** e **Gestão**.
 
 > ⚠️ **Por padrão o app abre em modo protótipo, com dados fictícios** (`src/lib/mock`): nada é lido nem
-> gravado no Supabase real. O modo real é `npm run dev:real` (ver abaixo).
+> gravado no Banco real.
 
 - Decisões, inventário, redundâncias, arquitetura e matriz de preservação: [`docs/CONSOLIDACAO.md`](docs/CONSOLIDACAO.md)
 - Mapa dos bancos (tabelas, funções, policies, dependências): [`docs/SUPABASE-MAPA.md`](docs/SUPABASE-MAPA.md)
@@ -264,9 +264,6 @@ própria, desenhada no Figma:
 | Mais › Receitas e vendas | Clientes · Cobranças · Vendas | `modulos/financeiro/telas/receitas-celular.tsx` |
 | Mais › Configurações | lista de seções → seção, pelo endereço | `routes/configuracoes.tsx` |
 
-O RH **não** tem tela de app: os dados dele vivem dentro do `RHApp.jsx` (o normalizador de funcionário,
-o catálogo de cargos), e desenhar as telas por fora criaria um segundo RH. Ele abre no celular como está.
-
 Nenhuma delas tem regra própria: os números vêm dos mesmos ganchos e das mesmas funções puras da tela de
 computador (`lib/agregacoes.ts`, `lib/filtros-movimentacoes.ts`, `dashboard/dados-periodo.ts`). O resto do
 Hub continua abrindo, na versão de computador dentro da casca.
@@ -341,24 +338,6 @@ docs/                     documentação da consolidação
 api/                      Vercel Functions do Financeiro (usuários, Banco Inter)
 ```
 
-## Scripts
-
-| Comando | Faz |
-|---|---|
-| `npm run dev` | servidor de desenvolvimento |
-| `npm run build` | build de produção (gera `routeTree.gen.ts`) |
-| `npm test` | Vitest (Financeiro, simulador, permissões/navegação, contrato da projeção) + testes do RH |
-| `npm run test:rh` | só os testes do RH (conferência de cálculos + regras da folha) |
-| `npm run rh:converter-visual` | reaplica a conversão de cores do RH para os tokens do design system |
-| `npm run dev:real` | servidor de desenvolvimento com os dados reais (`.env.real.local`) |
-| `npm run rh:copiar-dados` | confere/copia os dados do CRM RH antigo para as tabelas `rh_*`. Sem argumento só confere; `--gravar` copia; `--espelhar` também apaga o que saiu da origem; `--config` traz a configuração do RH (não vem por padrão, para não sobrescrever o que foi ajustado aqui) |
-| `npm run test:e2e` | navegação ponta a ponta com todos os perfis (Chrome; app rodando em :8080 ou outra base passada como argumento) |
-| `npm run test:e2e:interacoes` | fluxos reais (revisão, Pix, cadastro no RH, filtros, troca de conta, restrições) |
-| `npm run test:e2e:celular` | confere 390 px: nenhuma tela rola na horizontal e o console fica limpo |
-| `npm run apk:preparar` | build do site + copia para dentro do projeto Android |
-| `npm run apk:abrir` | abre o projeto Android no Android Studio |
-| `npx tsc --noEmit -p tsconfig.json` | typecheck |
-
 ## Convenções
 
 - **Realizado ≠ projeção:** saldo, fluxo realizado, Histórico e análises usam só lançamentos confirmados do
@@ -371,27 +350,8 @@ api/                      Vercel Functions do Financeiro (usuários, Banco Inter
 - **Regra de cálculo é função pura e testada.** O que decide dinheiro (dia útil, competência, parcelas,
   vales, projeção) mora em módulo próprio com teste, não dentro de componente.
 
-## Dados
 
-- Tudo o que aparece no protótipo é **fictício** (`src/lib/mock/seed-*.ts`): empresas, pessoas, CPFs, valores.
-- Os autotestes do RH usam trechos de relatórios da contabilidade com **nomes, CPFs e RGs trocados por
-  fictícios**; os valores e o layout continuam os dos relatórios, que é o que os testes conferem.
-- Não versione extratos, planilhas ou PDFs reais (ver `.gitignore`) nem arquivos `.env`.
 
-## Resultado da validação
-
-| Verificação | Resultado |
-|---|---|
-| Typecheck e build de produção | ✅ sem erros |
-| Testes unitários (`npx vitest run`) | ✅ 420 testes em 32 arquivos |
-| Testes do RH (`npm run test:rh`) | ✅ 471/471 cálculos e 138/138 regras da folha |
-| Navegação ponta a ponta (`npm run test:e2e`) | ✅ 111/111 (7 perfis, todas as telas e abas, URLs antigas) |
-| Fluxos reais (`npm run test:e2e:interacoes`) | ⚠️ 99/100 — a checagem "Cartões: pagamento da fatura" depende da data (falha depois do fechamento do dia 28, também no código anterior) (inclui venda parcelada virando cobrança e entrada prevista, folha do RH como saída projetada, recorrência puxando o valor do RH, clique na barra filtrando o detalhamento, troca de conta bancária e as várias mensalidades por cliente) |
-| Celular (`npm run test:e2e:celular`) | ✅ 23/23 telas a 390 px sem rolagem horizontal e sem erro de console |
-| Supabase real | ✅ migrações 47 a 57 aplicadas (a 58 liga o tempo real do Pix do dia) |
-| APK Android | ✅ compila no workflow *APK Android* em ~3 min (APK em Artifacts); ⏳ falta instalar num aparelho |
-
-Detalhes na seção 9 de [`docs/CONSOLIDACAO.md`](docs/CONSOLIDACAO.md#9-validação).
 
 ## Licença
 
