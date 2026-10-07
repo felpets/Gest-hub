@@ -220,18 +220,6 @@ Na tela de login há um botão para cada perfil fictício (senha de todos: `demo
 **Restaurar dados de demonstração** fica em Configurações › Geral (engrenagem no topo). As alterações feitas
 na demonstração ficam no `localStorage` do navegador.
 
-### Modo real (dados da empresa)
-
-`npm run dev:real` usa `.env.real.local` (fora do Git): `VITE_DATA_MODE=real` + `VITE_SUPABASE_URL`/
-`VITE_SUPABASE_ANON_KEY` do projeto Financeiro. O RH usa o **mesmo projeto e o mesmo login** (tabelas
-`rh_*`); quem entra no RH é liberado pessoa a pessoa em **Configurações › Usuários**. O Pix do dia enxerga,
-só para leitura, os pagamentos diários lançados no RH.
-
-Roteiro completo (migrações, cópia dos dados do CRM RH, virada e Vercel):
-[`docs/PRODUCAO-RH.md`](docs/PRODUCAO-RH.md).
-
----
-
 ## APK Android (o Pix do dia no celular)
 
 O app Android **é este mesmo site**: o build (`dist/client`) vai empacotado dentro do APK e roda num
